@@ -24,12 +24,13 @@ namespace FlightAgency.DataAccess
 
             while (await reader.ReadAsync())
             {
+                var role = reader.GetInt32(3);
                 User user = new User(
                     reader.GetInt32(0), //userid
                     reader.GetString(1), //username
                     reader.GetString(2), //password
                     reader.GetString(4), //email
-                    (reader.GetInt32(3) == 1) ? Roles.Client : Roles.Admin //role
+                    (role == 1) ? Roles.Client : Roles.Admin //role
                 );
                 users.Add(user);
             }

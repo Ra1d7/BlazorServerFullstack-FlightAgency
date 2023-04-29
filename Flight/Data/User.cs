@@ -29,6 +29,7 @@
             Username = username;
             Password = password;
             Email = email;
+            Role = role;
         }
 
         public int userId { get; set; }

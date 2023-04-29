@@ -1,4 +1,5 @@
 using Flight.Data;
+using Flight.Helpers;
 using FlightAgency.DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +15,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMvcCore().AddApiExplorer();
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddAuthentication("Bearer").AddJwtBearer(opts => {
     opts.TokenValidationParameters = new TokenValidationParameters()
     {
