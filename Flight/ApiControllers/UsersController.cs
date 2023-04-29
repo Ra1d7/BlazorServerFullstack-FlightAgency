@@ -1,11 +1,11 @@
-﻿using FlightAgency.Data;
-using FlightAgency.DataAccess;
+﻿using Flight.Data;
+using Flight.DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace FlightAgency.ApiControllers
+namespace Flight.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]

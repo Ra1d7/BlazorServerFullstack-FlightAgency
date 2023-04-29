@@ -1,4 +1,4 @@
-﻿using FlightAgency.DataAccess;
+﻿using Flight.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Flight.ApiControllers

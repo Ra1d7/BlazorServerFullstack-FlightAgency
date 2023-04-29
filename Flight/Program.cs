@@ -1,7 +1,7 @@
 using Flight.Data;
 using Flight.Helpers;
 using Flight.Pages;
-using FlightAgency.DataAccess;
+using Flight.DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -34,17 +34,6 @@ builder.Services.AddAuthorization(opts => {
     opts.AddPolicy("Client", policy => { policy.RequireClaim("Role", "Client"); });
 
 });
-var identitycs = builder.Configuration.GetConnectionString("Identity");
-builder.Services.AddDbContext<IdentityContext>(opts => opts.UseSqlServer(identitycs));
-builder.Services.AddIdentity<IdentityUser,IdentityRole>(opts => 
-{ 
-opts.Password.RequireDigit = false;
-    opts.Password.RequiredLength = 5;
-    opts.Password.RequireLowercase = false;
-    opts.Password.RequireUppercase = false;
-    opts.Password.RequireNonAlphanumeric = false;
-    opts.SignIn.RequireConfirmedEmail = false;
-}).AddEntityFrameworkStores<IdentityContext>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton(new FlightDB(builder.Configuration));
 

@@ -1,11 +1,11 @@
-﻿using FlightAgency.Data;
+﻿using Flight.Data;
 using System.Data.SqlClient;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography;
 using System.Text;
 using static Flight.ApiControllers.BookingController;
 
-namespace FlightAgency.DataAccess
+namespace Flight.DataAccess
 {
     public class FlightDB
     {

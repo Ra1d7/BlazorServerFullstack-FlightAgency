@@ -1,5 +1,6 @@
-﻿using FlightAgency.Data;
-using FlightAgency.DataAccess;
+﻿using Flight.Data;
+using Flight.DataAccess;
+using Flight.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

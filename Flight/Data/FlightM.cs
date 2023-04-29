@@ -1,4 +1,4 @@
-﻿namespace FlightAgency.Data
+﻿namespace Flight.Data
 {
     public class FlightM
     {

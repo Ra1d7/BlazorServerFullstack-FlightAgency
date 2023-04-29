@@ -1,5 +1,5 @@
-﻿using FlightAgency.Data;
-using FlightAgency.DataAccess;
+﻿using Flight.Data;
+using Flight.DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
