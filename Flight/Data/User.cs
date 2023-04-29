@@ -9,13 +9,19 @@
             Role = role;
         }
 
-        public User(int userId, string username, string password, string email, Roles role)
+        public User(string username, string password, string email)
+        {
+            Username = username;
+            Password = password;
+            Email = email;
+        }
+
+        public User(int userId, string username, string password, string email)
         {
             this.userId = userId;
             Username = username;
             Password = password;
             Email = email;
-            Role = role;
         }
 
         public int userId { get; set; }

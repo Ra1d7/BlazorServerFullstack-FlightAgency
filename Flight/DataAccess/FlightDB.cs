@@ -1,5 +1,6 @@
 ﻿using FlightAgency.Data;
 using System.Data.SqlClient;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -26,8 +27,7 @@ namespace FlightAgency.DataAccess
                     reader.GetInt32(0), //userid
                     reader.GetString(1), //username
                     reader.GetString(2), //password
-                    reader.GetString(4), //email
-                    (reader.GetInt32(3) == 1) ? Roles.Client : Roles.Admin //role
+                    reader.GetString(4) //email
                 );
                 users.Add(user);
             }
@@ -68,7 +68,9 @@ namespace FlightAgency.DataAccess
             bool result = false;
             var hash = Convert.ToHexString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(pass)));
             using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
-            SqlCommand cmd = new SqlCommand($"EXEC LoginUser {emailOrUsername},{hash}", conn);
+            SqlCommand cmd = new SqlCommand($"EXEC LoginUser @emailOrUsername,@hash", conn);
+            cmd.Parameters.AddWithValue("@emailOrUsername", emailOrUsername);
+            cmd.Parameters.AddWithValue("@hash", hash);
             await conn.OpenAsync();
             SqlDataReader reader = await cmd.ExecuteReaderAsync();
 
@@ -80,11 +82,14 @@ namespace FlightAgency.DataAccess
             reader.Close();
             return result;
         }
-        public async Task<User> GetUser(string term)
+        public async Task<User?> GetUser(string term)
         {
             User user = null!;
+            try
+            {
             using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
-            SqlCommand cmd = new SqlCommand($"EXEC GetUser {term}", conn);
+            SqlCommand cmd = new SqlCommand("EXEC GetUser @term", conn);
+            cmd.Parameters.AddWithValue("@term", term);
             await conn.OpenAsync();
             SqlDataReader reader = await cmd.ExecuteReaderAsync();
 
@@ -93,12 +98,68 @@ namespace FlightAgency.DataAccess
                 user = new User(
                    reader.GetInt32(0), //userid
                    reader.GetString(1), //username
-                   (reader.GetInt32(3) == 1) ? Roles.Client : Roles.Admin //role
+                   (reader.GetInt32(2) == 1) ? Roles.Client : Roles.Admin //role
                );
             }
 
             reader.Close();
+            }
+            catch
+            {
+                return null;
+            }
             return user;
+        }
+        public async Task<bool> CreateUser(User user)
+        {
+            try
+            {
+            var hashedpassword = Convert.ToHexString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(user.Password)));
+            using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
+            SqlCommand cmd = new SqlCommand("EXEC Admin_CreateUser @username,@password,@role,@email", conn);
+            cmd.Parameters.AddWithValue("@username", user.Username);
+            cmd.Parameters.AddWithValue("@password", hashedpassword);
+            cmd.Parameters.AddWithValue("@role", user.Role == Roles.Client ? 1 : 2);
+            cmd.Parameters.AddWithValue("@email", user.Email);
+            await conn.OpenAsync();
+            return await cmd.ExecuteNonQueryAsync() == 0 ? false : true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public async Task<bool> UpdateUser(User user)
+        {
+            try
+            {
+            var hashedpassword = Convert.ToHexString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(user.Password)));
+            using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
+            SqlCommand cmd = new SqlCommand("EXEC Admin_UpdateUser @userid,@username,@password,@role,@email", conn);
+            cmd.Parameters.AddWithValue("@userid", user.userId);
+            cmd.Parameters.AddWithValue("@username", user.Username);
+            cmd.Parameters.AddWithValue("@password", hashedpassword);
+            cmd.Parameters.AddWithValue("@role", user.Role == Roles.Client ? 1 : 2);
+            cmd.Parameters.AddWithValue("@email", user.Email);
+            await conn.OpenAsync();
+            return await cmd.ExecuteNonQueryAsync() == 0 ? false : true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public async Task<bool> DeleteUser(int id)
+        {
+            try
+            {
+            using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
+            SqlCommand cmd = new SqlCommand("DELETE FROM Users WHERE userId = @userid", conn);
+            cmd.Parameters.AddWithValue("@userid", id);
+            await conn.OpenAsync();
+            return await cmd.ExecuteNonQueryAsync() == 0 ? false : true;
+            }
+            catch { return false; }
         }
     }
 }
