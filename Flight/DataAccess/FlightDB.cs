@@ -161,5 +161,84 @@ namespace FlightAgency.DataAccess
             }
             catch { return false; }
         }
+        public async Task<FlightM?> GetFlight(int id)
+        {
+            FlightM flight = null;
+            using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
+            SqlCommand cmd = new SqlCommand(
+
+                "SELECT [flightId],[from],[to],[num_of_seats],[flight_time],[cost] FROM [Flights] WHERE flightId = @id"
+
+                , conn);
+            cmd.Parameters.AddWithValue("@id", id);
+            await conn.OpenAsync();
+            SqlDataReader reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                flight = new FlightM(
+                    reader.GetInt32(0), //flightid
+                    reader.GetString(1), //from
+                    reader.GetString(2), //to
+                    reader.GetInt32(3), //seats
+                    reader.GetDateTime(4), //flight_time
+                    reader.GetDecimal(5) //cost
+                );
+            }
+
+            reader.Close();
+            return flight;
+        }
+        public async Task<bool> AddFLight(FlightM flight)
+        {
+            try
+            {
+                using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
+                SqlCommand cmd = new SqlCommand("EXEC Admin_AddFlight @from,@to,@seats,@time,@cost", conn);
+                cmd.Parameters.AddWithValue("@from", flight.From);
+                cmd.Parameters.AddWithValue("@to", flight.To);
+                cmd.Parameters.AddWithValue("@seats", flight.seats);
+                cmd.Parameters.AddWithValue("@time", flight.flightTime);
+                cmd.Parameters.AddWithValue("@cost", flight.cost);
+                await conn.OpenAsync();
+                return await cmd.ExecuteNonQueryAsync() == 0 ? false : true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public async Task<bool> UpdateFlight(FlightM flight)
+        {
+            try
+            {
+                using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
+                SqlCommand cmd = new SqlCommand("EXEC Admin_UpdateFlight @flightid,@from,@to,@seats,@time,@cost", conn);
+                cmd.Parameters.AddWithValue("@flightid", flight.flightId);
+                cmd.Parameters.AddWithValue("@from", flight.From);
+                cmd.Parameters.AddWithValue("@to", flight.To);
+                cmd.Parameters.AddWithValue("@seats", flight.seats);
+                cmd.Parameters.AddWithValue("@time", flight.flightTime);
+                cmd.Parameters.AddWithValue("@cost", flight.cost);
+                await conn.OpenAsync();
+                return await cmd.ExecuteNonQueryAsync() == 0 ? false : true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public async Task<bool> DeleteFlight(int id)
+        {
+            try
+            {
+                using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
+                SqlCommand cmd = new SqlCommand("DELETE FROM Flights WHERE FlightId = @flightid", conn);
+                cmd.Parameters.AddWithValue("@flightid", id);
+                await conn.OpenAsync();
+                return await cmd.ExecuteNonQueryAsync() == 0 ? false : true;
+            }
+            catch { return false; }
+        }
     }
 }

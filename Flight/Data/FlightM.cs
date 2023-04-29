@@ -2,6 +2,15 @@
 {
     public class FlightM
     {
+        public FlightM(string from, string to, int seats, DateTime flightTime, decimal cost)
+        {
+            From = from;
+            To = to;
+            this.seats = seats;
+            this.flightTime = flightTime;
+            this.cost = cost;
+        }
+
         public FlightM(int flightId, string from, string to, int seats, DateTime flightTime, decimal cost)
         {
             this.flightId = flightId;
