@@ -1,4 +1,4 @@
-﻿@page "/flights"
+﻿@page "/bookings"
 @using Flight;
 @using FlightAgency.DataAccess;
 @inject FlightDB fl;
@@ -29,9 +29,9 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" aria-current="page" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="/flights">Flights</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/flights">Flights</a></li>
                     <li class="nav-item"><a class="nav-link" href="/users">Users</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/bookings">Bookings</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/bookings">Bookings</a></li>
                     <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
                 </ul>
@@ -61,56 +61,38 @@
                 <thead>
                     <tr>
                     <th>
-                        Flight Number
+                        UserId
                     </th>
                     <th>
-                        From
+                        FlightId
                     </th>
                     <th>
-                        To
+                        Booking Time
                     </th>
-                    <th>
-                        Seats Avaliable
-                    </th>
-                    <th>
-                        Flight Time
-                    </th>
-                    <th>
-                        Cost
-                    </th>
-                    <th>
-                        Book
-                    </th>
+                        <th>
+                            Delete
+                        </th>
                     </tr>
                     </thead>
                 <tbody>
                     @{
-                        var flights = await fl.GetFlights();
+                        var bookings = await fl.GetBookings();
 
                     }
-                    @foreach(FlightM flightm in flights)
+                    @foreach(var booking in bookings)
                     {
               <tr>
                   <td>
-                      @flightm.flightId
+                                @booking.userid
                   </td>
                   <td>
-                      @flightm.From
+                                @booking.flightid
                   </td>
                             <td>
-                                @flightm.To
+                                @booking.time
                             </td>
                             <td>
-                                @flightm.seats
-                            </td>
-                            <td>
-                                @flightm.flightTime
-                            </td>
-                            <td>
-                                @flightm.cost
-                            </td>
-                            <td>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="">Book</button>
+                                <button type="button" class="btn btn-danger btn-sm" onclick="">Delete</button>
                             </td>
               </tr>
                     }
