@@ -1,5 +1,6 @@
 using Flight.Data;
 using Flight.Helpers;
+using Flight.Pages;
 using FlightAgency.DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

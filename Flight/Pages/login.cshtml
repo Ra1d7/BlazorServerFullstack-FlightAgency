@@ -1,0 +1,95 @@
+﻿@page
+@model Flight.Pages.loginModel
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Pigeon Agency</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Responsive navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container px-5">
+            <a class="navbar-brand" href="#!">Pigeon Agency</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" aria-current="page" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/flights">Flights</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/users">Users</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/bookings">Bookings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/login">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Header-->
+    <header class="bg-dark py-3">
+        <div class="container px-5">
+            <div class="row gx-3 justify-content-center">
+                <div class="col-lg-6 mb-0">
+                    <div class="text-center my-0">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-2"><i class="bi bi-envelope"></i></div>
+                        <h2 class="display-5 fw-bolder text-white mb-0 mt-0">Contact Us!</h2>
+                        <div class="container mt-0">
+                            <p class="lead text-white-50 mt-0">We'd love to hear your feedback as it helps us improve our services to people like you!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </header>
+    <!-- Contact section-->
+    <section>
+        <div class="form-container w-50 align-content-center mt-5" style="margin:auto;">
+
+            <form>
+                <div class="form-group m-2">
+                    <label for="exampleInputPassword1">Username</label>
+                    <input class="form-control w-70" id="exampleInputPassword1" placeholder="Username">
+                </div>
+                <div class="form-group m-2">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control w-70" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                    <small id="emailHelp" class="form-text text-muted w-75">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-group m-2">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control w-70" id="exampleInputPassword1" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary m-2 align-self-center">Register</button>
+            </form>
+        </div>
+    </section>
+    <!-- Flights info section-->
+    <section class="py-5 border-bottom">
+    </section>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container px-5"><p class="m-0 text-center text-white">Copyright &copy; Pigeon Agency 2023</p></div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <!-- * *                               SB Forms JS                               * *-->
+    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+</body>
+</html>
+
+
+
