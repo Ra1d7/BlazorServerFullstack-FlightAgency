@@ -27,14 +27,8 @@ namespace Flight.Pages
             var data = new EmailData(fullname,email,phone,message);
 
                 var _emailSender = new EmailSender(_config);
-            if(await _emailSender.SendEmailAsync(data))
-            {
+            await _emailSender.SendEmailAsync(data);
             ViewData["confirm"] = $"thank you {fullname}, we will forward your message";
-            }
-            else
-            {
-            ViewData["bad"] = $"Sorry {fullname} , we couldn't sent your message";
-            }
 
         }
 
