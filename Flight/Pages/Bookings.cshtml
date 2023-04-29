@@ -60,16 +60,16 @@
             <table class="table table-dark">
                 <thead>
                     <tr>
-                    <th>
+                        <th class="text-center">
                         UserId
                     </th>
-                    <th>
+                        <th class="text-center">
                         FlightId
                     </th>
-                    <th>
+                        <th class="text-center">
                         Booking Time
                     </th>
-                        <th>
+                        <th class="text-center">
                             Delete
                         </th>
                     </tr>
@@ -82,16 +82,16 @@
                     @foreach(var booking in bookings)
                     {
               <tr>
-                  <td>
+                            <td class="text-center">
                                 @booking.userid
                   </td>
-                  <td>
+                            <td class="text-center">
                                 @booking.flightid
                   </td>
-                            <td>
+                            <td class="text-center">
                                 @booking.time
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <button type="button" class="btn btn-danger btn-sm" onclick="">Delete</button>
                             </td>
               </tr>

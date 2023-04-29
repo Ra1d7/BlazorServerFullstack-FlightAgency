@@ -57,65 +57,24 @@
     <!-- Flights section-->
     <section class="py-5 border-bottom" id="features">
         <div class="container px-5 my-5">
-            <table class="table table-dark">
-                <thead>
-                    <tr>
-                    <th>
-                        Flight Number
-                    </th>
-                    <th>
-                        From
-                    </th>
-                    <th>
-                        To
-                    </th>
-                    <th>
-                        Seats Avaliable
-                    </th>
-                    <th>
-                        Flight Time
-                    </th>
-                    <th>
-                        Cost
-                    </th>
-                    <th>
-                        Book
-                    </th>
-                    </tr>
-                    </thead>
-                <tbody>
+           
                     @{
                         var flights = await fl.GetFlights();
 
                     }
-                    @foreach(FlightM flightm in flights)
-                    {
-              <tr>
-                  <td>
-                      @flightm.flightId
-                  </td>
-                  <td>
-                      @flightm.From
-                  </td>
-                            <td>
-                                @flightm.To
-                            </td>
-                            <td>
-                                @flightm.seats
-                            </td>
-                            <td>
-                                @flightm.flightTime
-                            </td>
-                            <td>
-                                @flightm.cost
-                            </td>
-                            <td>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="">Book</button>
-                            </td>
-              </tr>
-                    }
-                </tbody>
-            </table>
+                <div class="d-flex flex-wrap">
+                @foreach(FlightM flightm in flights)
+                {
+                    <div class="card text-center mr-4" style="width: 18rem;margin:25px">
+                        <img class="card-img-top" style="max-height:180px" src=".\assets\pics\(@flightm.To).jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Flight number @flightm.flightId</h5>
+                            <p class="card-text">this flight goes from @flightm.From to @flightm.To at @flightm.flightTime</p>
+                            <a href="#" class="btn btn-primary">Book</a>
+                        </div>
+                    </div>
+                }
+                </div>
         </div>
     </section>
     <!-- Flights info section-->
