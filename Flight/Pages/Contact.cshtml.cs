@@ -24,7 +24,7 @@ namespace Flight.Pages
             var phone = Request.Form["phone"];
             var message = Request.Form["message"];
 
-            var data = new EmailData(fullname,email,phone,message);
+            var data = new EmailData(fullname, email, phone, message);
 
             ViewData["confirm"] = $"thank you {fullname}, we will forward your message";
             var _emailSender = new EmailSender(_config);
@@ -32,7 +32,7 @@ namespace Flight.Pages
 
         }
 
-        public ContactModel(ILogger<ContactModel> logger,IConfiguration config)
+        public ContactModel(ILogger<ContactModel> logger, IConfiguration config)
         {
             _logger = logger;
             _config = config;

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace Flight.ApiControllers
@@ -35,8 +34,8 @@ namespace Flight.ApiControllers
         private async Task<User?> CheckData(UserData data)
         {
             var user = data.email;
-            bool result = await _db.LoginUser(user,data.password);
-            if(result)
+            bool result = await _db.LoginUser(user, data.password);
+            if (result)
             {
                 User? usr = await _db.GetUser(user);
                 return usr;

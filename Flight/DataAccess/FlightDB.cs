@@ -1,6 +1,5 @@
 ﻿using Flight.Data;
 using System.Data.SqlClient;
-using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography;
 using System.Text;
 using static Flight.ApiControllers.BookingController;
@@ -66,7 +65,7 @@ namespace Flight.DataAccess
             reader.Close();
             return flights;
         }
-        public async Task<bool> LoginUser(string emailOrUsername,string pass)
+        public async Task<bool> LoginUser(string emailOrUsername, string pass)
         {
             bool result = false;
             var hash = Convert.ToHexString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(pass)));
@@ -90,22 +89,22 @@ namespace Flight.DataAccess
             User user = null!;
             try
             {
-            using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
-            SqlCommand cmd = new SqlCommand("EXEC GetUser @term", conn);
-            cmd.Parameters.AddWithValue("@term", term);
-            await conn.OpenAsync();
-            SqlDataReader reader = await cmd.ExecuteReaderAsync();
+                using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
+                SqlCommand cmd = new SqlCommand("EXEC GetUser @term", conn);
+                cmd.Parameters.AddWithValue("@term", term);
+                await conn.OpenAsync();
+                SqlDataReader reader = await cmd.ExecuteReaderAsync();
 
-            while (await reader.ReadAsync())
-            {
-                user = new User(
-                   reader.GetInt32(0), //userid
-                   reader.GetString(1), //username
-                   (reader.GetInt32(2) == 1) ? Roles.Client : Roles.Admin //role
-               );
-            }
+                while (await reader.ReadAsync())
+                {
+                    user = new User(
+                       reader.GetInt32(0), //userid
+                       reader.GetString(1), //username
+                       (reader.GetInt32(2) == 1) ? Roles.Client : Roles.Admin //role
+                   );
+                }
 
-            reader.Close();
+                reader.Close();
             }
             catch
             {
@@ -117,15 +116,15 @@ namespace Flight.DataAccess
         {
             try
             {
-            var hashedpassword = Convert.ToHexString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(user.Password)));
-            using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
-            SqlCommand cmd = new SqlCommand("EXEC Admin_CreateUser @username,@password,@role,@email", conn);
-            cmd.Parameters.AddWithValue("@username", user.Username);
-            cmd.Parameters.AddWithValue("@password", hashedpassword);
-            cmd.Parameters.AddWithValue("@role", user.Role == Roles.Client ? 1 : 2);
-            cmd.Parameters.AddWithValue("@email", user.Email);
-            await conn.OpenAsync();
-            return await cmd.ExecuteNonQueryAsync() == 0 ? false : true;
+                var hashedpassword = Convert.ToHexString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(user.Password)));
+                using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
+                SqlCommand cmd = new SqlCommand("EXEC Admin_CreateUser @username,@password,@role,@email", conn);
+                cmd.Parameters.AddWithValue("@username", user.Username);
+                cmd.Parameters.AddWithValue("@password", hashedpassword);
+                cmd.Parameters.AddWithValue("@role", user.Role == Roles.Client ? 1 : 2);
+                cmd.Parameters.AddWithValue("@email", user.Email);
+                await conn.OpenAsync();
+                return await cmd.ExecuteNonQueryAsync() == 0 ? false : true;
             }
             catch
             {
@@ -136,16 +135,16 @@ namespace Flight.DataAccess
         {
             try
             {
-            var hashedpassword = Convert.ToHexString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(user.Password)));
-            using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
-            SqlCommand cmd = new SqlCommand("EXEC Admin_UpdateUser @userid,@username,@password,@role,@email", conn);
-            cmd.Parameters.AddWithValue("@userid", user.userId);
-            cmd.Parameters.AddWithValue("@username", user.Username);
-            cmd.Parameters.AddWithValue("@password", hashedpassword);
-            cmd.Parameters.AddWithValue("@role", user.Role == Roles.Client ? 1 : 2);
-            cmd.Parameters.AddWithValue("@email", user.Email);
-            await conn.OpenAsync();
-            return await cmd.ExecuteNonQueryAsync() == 0 ? false : true;
+                var hashedpassword = Convert.ToHexString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(user.Password)));
+                using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
+                SqlCommand cmd = new SqlCommand("EXEC Admin_UpdateUser @userid,@username,@password,@role,@email", conn);
+                cmd.Parameters.AddWithValue("@userid", user.userId);
+                cmd.Parameters.AddWithValue("@username", user.Username);
+                cmd.Parameters.AddWithValue("@password", hashedpassword);
+                cmd.Parameters.AddWithValue("@role", user.Role == Roles.Client ? 1 : 2);
+                cmd.Parameters.AddWithValue("@email", user.Email);
+                await conn.OpenAsync();
+                return await cmd.ExecuteNonQueryAsync() == 0 ? false : true;
             }
             catch
             {
@@ -156,11 +155,11 @@ namespace Flight.DataAccess
         {
             try
             {
-            using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
-            SqlCommand cmd = new SqlCommand("DELETE FROM Users WHERE userId = @userid", conn);
-            cmd.Parameters.AddWithValue("@userid", id);
-            await conn.OpenAsync();
-            return await cmd.ExecuteNonQueryAsync() == 0 ? false : true;
+                using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
+                SqlCommand cmd = new SqlCommand("DELETE FROM Users WHERE userId = @userid", conn);
+                cmd.Parameters.AddWithValue("@userid", id);
+                await conn.OpenAsync();
+                return await cmd.ExecuteNonQueryAsync() == 0 ? false : true;
             }
             catch { return false; }
         }
@@ -243,7 +242,7 @@ namespace Flight.DataAccess
             }
             catch { return false; }
         }
-        public async Task<bool> BookFlight(int userid,int flightid)
+        public async Task<bool> BookFlight(int userid, int flightid)
         {
             try
             {

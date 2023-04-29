@@ -7,8 +7,8 @@ namespace Flight.ApiControllers
     [ApiController]
     public class BookingController : ControllerBase
     {
-        public record BookingDetailsDto(int userid,int flightid);
-        public record BookingDetails(int userid,int flightid,DateTime time);
+        public record BookingDetailsDto(int userid, int flightid);
+        public record BookingDetails(int userid, int flightid, DateTime time);
         private readonly IConfiguration _config;
         private readonly FlightDB _db;
 

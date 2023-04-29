@@ -1,10 +1,5 @@
-using Flight.Data;
-using Flight.Helpers;
-using Flight.Pages;
 using Flight.DataAccess;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using Flight.Helpers;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -17,7 +12,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMvcCore().AddApiExplorer();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
-builder.Services.AddAuthentication("Bearer").AddJwtBearer(opts => {
+builder.Services.AddAuthentication("Bearer").AddJwtBearer(opts =>
+{
     opts.TokenValidationParameters = new TokenValidationParameters()
     {
         ValidateAudience = true,
@@ -29,7 +25,8 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer(opts => {
         ValidateLifetime = true
     };
 });
-builder.Services.AddAuthorization(opts => {
+builder.Services.AddAuthorization(opts =>
+{
     opts.AddPolicy("Admin", policy => { policy.RequireClaim("Role", "Admin"); });
     opts.AddPolicy("Client", policy => { policy.RequireClaim("Role", "Client"); });
 

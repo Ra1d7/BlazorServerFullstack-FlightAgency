@@ -1,7 +1,5 @@
 ﻿using Flight.Data;
 using Flight.DataAccess;
-using Flight.Data;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Flight.ApiControllers
@@ -11,7 +9,7 @@ namespace Flight.ApiControllers
     public class FlightsController : ControllerBase
     {
         public record CreateFlightDto(string from, string to, int seats, DateTime time, decimal cost);
-        public record UpdateFlightDto(int id,string from, string to, int seats, DateTime time, decimal cost);
+        public record UpdateFlightDto(int id, string from, string to, int seats, DateTime time, decimal cost);
         private readonly IConfiguration _config;
         private readonly FlightDB _db;
 
@@ -43,7 +41,7 @@ namespace Flight.ApiControllers
         {
             if (flight != null)
             {
-                FlightM toBeCreated = new FlightM(flight.from,flight.to,flight.seats,flight.time,flight.cost);
+                FlightM toBeCreated = new FlightM(flight.from, flight.to, flight.seats, flight.time, flight.cost);
                 await _db.AddFLight(toBeCreated);
                 return Ok(flight);
             }

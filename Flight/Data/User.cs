@@ -23,7 +23,7 @@
             Password = password;
             Email = email;
         }
-        public User(int userId, string username, string password, string email,Roles role)
+        public User(int userId, string username, string password, string email, Roles role)
         {
             this.userId = userId;
             Username = username;

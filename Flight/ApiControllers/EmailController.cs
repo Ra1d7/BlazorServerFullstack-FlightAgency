@@ -1,5 +1,4 @@
 ﻿using Flight.Helpers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static Flight.Helpers.EmailSender;
 

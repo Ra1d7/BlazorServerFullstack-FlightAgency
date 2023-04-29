@@ -1,6 +1,5 @@
 ﻿using Flight.Data;
 using Flight.DataAccess;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,12 +10,12 @@ namespace Flight.ApiControllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        public record UpdateUserDto(int userid,string username,string password,string email);
+        public record UpdateUserDto(int userid, string username, string password, string email);
         public record CreateUserDto(string username, string password, string email);
         private readonly IConfiguration _config;
         private readonly FlightDB _db;
 
-        public UsersController(IConfiguration config,FlightDB db) 
+        public UsersController(IConfiguration config, FlightDB db)
         {
             _config = config;
             _db = db;
@@ -42,7 +41,7 @@ namespace Flight.ApiControllers
         // [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Post([FromBody] CreateUserDto user)
         {
-           if (user != null) 
+            if (user != null)
             {
                 User toBeCreated = new User(user.username, user.password, user.email);
                 await _db.CreateUser(toBeCreated);
@@ -56,19 +55,19 @@ namespace Flight.ApiControllers
         // [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Put([FromBody] UpdateUserDto user)
         {
-            if(user != null)
+            if (user != null)
             {
                 try
                 {
-                    User toBeUpdated = new User(user.userid,user.username,user.password,user.email);
-                    if(await _db.UpdateUser(toBeUpdated))
+                    User toBeUpdated = new User(user.userid, user.username, user.password, user.email);
+                    if (await _db.UpdateUser(toBeUpdated))
                     {
 
-                    return Ok(user);
+                        return Ok(user);
                     }
                     return BadRequest("no users were affected");
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     return BadRequest($"An error occured while updating the user {user.userid}\n{e.Message}");
                 }
@@ -85,7 +84,7 @@ namespace Flight.ApiControllers
             {
                 return Ok(await _db.DeleteUser(id));
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return BadRequest($"Unable to delete user: {id}\n{e.Message}");
             }
