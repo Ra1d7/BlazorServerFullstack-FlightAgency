@@ -26,19 +26,24 @@ namespace Flight.ApiControllers
         [HttpPost]
         [Route("CreateToken")]
         [AllowAnonymous]
-        public IActionResult GetToken([FromBody] UserData data)
+        public async Task<IActionResult> GetToken([FromBody] UserData data)
         {
-            var user = CheckData(data);
+            var user = await CheckData(data);
             return (user is null) ? Unauthorized() : Ok(GenToken(user));
         }
 
-        private User? CheckData(UserData data)
+        private async Task<User?> CheckData(UserData data)
         {
             var user = data.email;
-            var hash = Convert.ToHexString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(data.password)));
+            bool result = await _db.LoginUser(user,data.password);
+            if(result)
+            {
+                User? usr = await _db.GetUser(user);
+                return usr;
+            }
             return null;
         }
-        private string? GenToken(User user)
+        private async Task<string?> GenToken(User user)
         {
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetValue<string>("Authentication:SecretKey")));
             var SigningCreds = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);

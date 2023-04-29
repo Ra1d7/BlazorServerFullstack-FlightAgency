@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography;
 using System.Text;
+using static Flight.ApiControllers.BookingController;
 
 namespace FlightAgency.DataAccess
 {
@@ -27,7 +28,8 @@ namespace FlightAgency.DataAccess
                     reader.GetInt32(0), //userid
                     reader.GetString(1), //username
                     reader.GetString(2), //password
-                    reader.GetString(4) //email
+                    reader.GetString(4), //email
+                    (reader.GetInt32(3) == 1) ? Roles.Client : Roles.Admin //role
                 );
                 users.Add(user);
             }
@@ -239,6 +241,64 @@ namespace FlightAgency.DataAccess
                 return await cmd.ExecuteNonQueryAsync() == 0 ? false : true;
             }
             catch { return false; }
+        }
+        public async Task<bool> BookFlight(int userid,int flightid)
+        {
+            try
+            {
+                using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
+                SqlCommand cmd = new SqlCommand("EXEC BookFlight @userid,@flightid", conn);
+                cmd.Parameters.AddWithValue("@userid", userid);
+                cmd.Parameters.AddWithValue("@flightid", flightid);
+                await conn.OpenAsync();
+                return await cmd.ExecuteNonQueryAsync() == 0 ? false : true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public async Task<List<BookingDetails>> GetBookings()
+        {
+            List<BookingDetails> bookings = new List<BookingDetails>();
+            using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
+            SqlCommand cmd = new SqlCommand("SELECT FlightId,UserId,book_time FROM BookedFlights", conn);
+            await conn.OpenAsync();
+            SqlDataReader reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                BookingDetails booking = new BookingDetails(
+                    reader.GetInt32(0), //flightId
+                    reader.GetInt32(1), //UserId
+                    reader.GetDateTime(2) //Book_time
+                );
+                bookings.Add(booking);
+            }
+
+            reader.Close();
+            return bookings;
+        }
+        public async Task<BookingDetails?> GetBooking(int userid)
+        {
+            BookingDetails booking = null;
+            using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
+            SqlCommand cmd = new SqlCommand("SELECT FlightId,UserId,book_time FROM BookedFlights WHERE userId = @userid", conn);
+            cmd.Parameters.AddWithValue("@userid", userid);
+            await conn.OpenAsync();
+            SqlDataReader reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                booking = new BookingDetails(
+                    reader.GetInt32(0), //flightId
+                    reader.GetInt32(1), //UserId
+                    reader.GetDateTime(2) //Book_time
+                );
+            }
+
+            reader.Close();
+            return booking;
         }
     }
 }
