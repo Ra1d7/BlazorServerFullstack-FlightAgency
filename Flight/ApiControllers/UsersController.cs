@@ -78,7 +78,7 @@ namespace Flight.ApiControllers
         // DELETE api/<UsersController>/5
         [HttpDelete("{id}")]
         // [Authorize(Policy = "Admin")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser([FromQuery]int id)
         {
             try
             {

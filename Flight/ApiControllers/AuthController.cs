@@ -16,7 +16,7 @@ namespace Flight.ApiControllers
         private readonly IConfiguration _config;
         private readonly FlightDB _db;
 
-        public record UserData(string email, string password);
+        public record UserDataDto(string email, string password);
         public AuthController(IConfiguration config, FlightDB db)
         {
             _config = config;
@@ -25,13 +25,13 @@ namespace Flight.ApiControllers
         [HttpPost]
         [Route("CreateToken")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetToken([FromBody] UserData data)
+        public async Task<IActionResult> GetToken([FromBody] UserDataDto data)
         {
             var user = await CheckData(data);
             return (user is null) ? Unauthorized() : Ok(GenToken(user));
         }
 
-        private async Task<User?> CheckData(UserData data)
+        private async Task<User?> CheckData(UserDataDto data)
         {
             var user = data.email;
             bool result = await _db.LoginUser(user, data.password);
