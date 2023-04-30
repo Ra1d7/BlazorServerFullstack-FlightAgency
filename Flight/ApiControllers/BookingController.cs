@@ -30,12 +30,12 @@ namespace Flight.ApiControllers
             return await _db.GetBooking(userid);
         }
         [HttpPost]
-        [Authorize(Policy = "Client")]
-        public async Task<IActionResult> BookFlight([FromBody] BookingDetails bookingDetails)
+        [Authorize]
+        public async Task<IActionResult> BookFlight([FromBody] BookingDetailsDto bookingDetails)
         {
             try
             {
-                bool result = await _db.BookFlight(bookingDetails.userid, bookingDetails.flightid);
+                bool result = await _db.BookFlight(bookingDetails);
                 if (result) return Ok("Flight Booked!");
                 return BadRequest($"Couldn't book flight for user {bookingDetails.userid} at flight {bookingDetails.flightid}");
             }
@@ -43,6 +43,12 @@ namespace Flight.ApiControllers
             {
                 return BadRequest($"An error has occured while trying to book the flight {ex.Message}");
             }
+        }
+        [HttpDelete]
+        [Authorize(Policy = "Admin")]
+        public async Task<bool> DeleteBooking([FromBody] BookingDetailsDto details)
+        {
+            return await _db.DeleteBooking(details);
         }
     }
 }

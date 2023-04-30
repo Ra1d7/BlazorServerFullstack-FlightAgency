@@ -44,7 +44,7 @@ namespace Flight.ApiControllers
             {
                 FlightM toBeCreated = new FlightM(flight.from, flight.to, flight.seats, flight.time, flight.cost);
                 await _db.AddFLight(toBeCreated);
-                return Ok(toBeCreated);
+                return Ok(await _db.GetFlightid(flight));
             }
             return BadRequest();
         }

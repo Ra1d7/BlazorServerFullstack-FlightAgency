@@ -46,7 +46,7 @@ namespace Flight.ApiControllers
             {
                 User toBeCreated = new User(user.username, user.password, user.email);
                 await _db.CreateUser(toBeCreated);
-                return Ok(user);
+                return Ok(await _db.GetUserId(user));
             }
             return BadRequest();
         }
@@ -77,7 +77,7 @@ namespace Flight.ApiControllers
         }
 
         // DELETE api/<UsersController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteUser([FromQuery] int id)
         {
