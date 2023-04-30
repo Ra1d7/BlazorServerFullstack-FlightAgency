@@ -1,8 +1,8 @@
 # Flight
 ## A website for a fictional travel agency with full CRUD operations
-it has a front-end and a restful-api with a sql server database to hold users/flights/contact information and a featured login page with full admin support
-
-the api has JWT bearer token authentication and policy authorization based on roles for clients/admins with each role having access to their respective endpoints.
+* the project features a front-end using html/css/javascript & bootstrap with jquery.
+* an api has JWT bearer token authentication and policy authorization based on roles for clients/admins with each role having access to their respective endpoints.
+* a sql server database with stored procedures to perform crud operations and querying and filtering data back and forth with the front-end and api using ADO.NET
 
 
 
