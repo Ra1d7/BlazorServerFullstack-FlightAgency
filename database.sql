@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [TravelAgencyDB]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  Database [TravelAgencyDB]    Script Date: 4/30/2023 1:26:58 PM ******/
 CREATE DATABASE [TravelAgencyDB]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -84,7 +84,7 @@ ALTER DATABASE [TravelAgencyDB] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CL
 GO
 USE [TravelAgencyDB]
 GO
-/****** Object:  UserDefinedFunction [dbo].[fnIsValidEmail]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  UserDefinedFunction [dbo].[fnIsValidEmail]    Script Date: 4/30/2023 1:26:59 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -100,7 +100,7 @@ BEGIN
     RETURN CASE WHEN ISNULL(@email, '') <> '' AND @email LIKE '%_@%_.__%' THEN 1 ELSE 0 END
 END
 GO
-/****** Object:  Table [dbo].[BookedFlights]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  Table [dbo].[BookedFlights]    Script Date: 4/30/2023 1:26:59 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -116,7 +116,7 @@ CREATE TABLE [dbo].[BookedFlights](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CancelledFlights]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  Table [dbo].[CancelledFlights]    Script Date: 4/30/2023 1:26:59 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -133,7 +133,7 @@ CREATE TABLE [dbo].[CancelledFlights](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Flights]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  Table [dbo].[Flights]    Script Date: 4/30/2023 1:26:59 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -151,7 +151,7 @@ CREATE TABLE [dbo].[Flights](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Roles]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  Table [dbo].[Roles]    Script Date: 4/30/2023 1:26:59 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -165,7 +165,7 @@ CREATE TABLE [dbo].[Roles](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 4/30/2023 1:26:59 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -217,7 +217,7 @@ ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [valid_email] CHECK  (([em
 GO
 ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [valid_email]
 GO
-/****** Object:  StoredProcedure [dbo].[Admin_AddFlight]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  StoredProcedure [dbo].[Admin_AddFlight]    Script Date: 4/30/2023 1:26:59 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -233,7 +233,7 @@ BEGIN
 INSERT INTO FLIGHTS ([from],[to],num_of_seats,flight_time,cost) VALUES (@from,@to,@seats,@time,@cost);
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Admin_CreateUser]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  StoredProcedure [dbo].[Admin_CreateUser]    Script Date: 4/30/2023 1:26:59 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -248,7 +248,7 @@ BEGIN
 INSERT INTO Users (username,hashedPass,roleId,email) VALUES (@username,@password,@role,@email);
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Admin_DeleteFlight]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  StoredProcedure [dbo].[Admin_DeleteFlight]    Script Date: 4/30/2023 1:26:59 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -260,7 +260,7 @@ BEGIN
 DELETE FROM Flights WHERE flightId = @flightId
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Admin_UpdateFlight]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  StoredProcedure [dbo].[Admin_UpdateFlight]    Script Date: 4/30/2023 1:26:59 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -277,7 +277,7 @@ BEGIN
 UPDATE Flights SET [from]=@from,[to]=@to,num_of_seats=@seats,flight_time=@time,cost=@cost WHERE flightId = @flightid
 END
 GO
-/****** Object:  StoredProcedure [dbo].[Admin_UpdateUser]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  StoredProcedure [dbo].[Admin_UpdateUser]    Script Date: 4/30/2023 1:26:59 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -293,7 +293,7 @@ BEGIN
 UPDATE Users SET username=@username,hashedPass=@password,roleId=@role,email=@email WHERE userId = @userid
 END
 GO
-/****** Object:  StoredProcedure [dbo].[BookFlight]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  StoredProcedure [dbo].[BookFlight]    Script Date: 4/30/2023 1:26:59 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -316,7 +316,7 @@ SELECT 0
 RETURN
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CancelFlight]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  StoredProcedure [dbo].[CancelFlight]    Script Date: 4/30/2023 1:26:59 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -333,7 +333,7 @@ BEGIN
 	INSERT INTO TravelAgencyDB.CancelledFlights () VALUES (@flightId,@userId,GETDATE(),@reason)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[DowngradeUser]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  StoredProcedure [dbo].[DowngradeUser]    Script Date: 4/30/2023 1:26:59 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -346,7 +346,7 @@ BEGIN
 UPDATE Users SET roleId = @roleId WHERE userId = @userId
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetFlights]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetFlights]    Script Date: 4/30/2023 1:26:59 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -358,7 +358,7 @@ BEGIN
 SELECT Flights.flightId,[from],[to],num_of_seats,flight_time,cost,book_time,IIF(book_time > GETDATE(),'flown','upcoming') [status] FROM Flights INNER JOIN BookedFlights ON Flights.flightId = BookedFlights.flightId WHERE Flights.flightId IN(SELECT flightId FROM BookedFlights WHERE userId = @userId)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetUser]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetUser]    Script Date: 4/30/2023 1:26:59 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -370,7 +370,7 @@ BEGIN
 SELECT userId,username,roleId FROM Users WHERE username LIKE '%'+@term+'%' OR email LIKE '%'+@term+'%';
 END
 GO
-/****** Object:  StoredProcedure [dbo].[LoginUser]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  StoredProcedure [dbo].[LoginUser]    Script Date: 4/30/2023 1:26:59 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -386,7 +386,7 @@ WHEN @hashedPassword = (SELECT hashedPass FROM Users WHERE userName = @email_or_
 ELSE 0 END AS result
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RegisterUser]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  StoredProcedure [dbo].[RegisterUser]    Script Date: 4/30/2023 1:26:59 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -400,7 +400,7 @@ BEGIN
 INSERT INTO Users(userName,hashedPass,roleId,email) VALUES (@username,@hashedPassword,1,@email)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[UpgradeUser]    Script Date: 4/29/2023 2:27:41 PM ******/
+/****** Object:  StoredProcedure [dbo].[UpgradeUser]    Script Date: 4/30/2023 1:26:59 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
