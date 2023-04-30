@@ -1,6 +1,6 @@
 # Flight
 
-- Flight is a Blazor Server website project for a fictional travel agency.
+Flight is a Blazor Server website project for a fictional travel agency.
 - The project features a front-end developed using HTML, CSS, JavaScript, Razor Pages, and Bootstrap with jQuery.
 - The backend includes an API with JWT Bearer token authentication and policy authorization based on roles for clients and admins.
 - Each role has access to its respective endpoints.
