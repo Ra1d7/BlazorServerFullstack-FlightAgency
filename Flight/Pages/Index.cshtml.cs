@@ -4,14 +4,13 @@ namespace Flight.Pages
 {
     public class IndexModel : PageModel
     {
-        public string login { get; set; } = "Login";
+        public bool login { get; set; } = true;
         public void OnGet()
         {
-            ViewData["login"] = login;
         }
         public void OnGetLogin(string user)
         {
-            ViewData["login"] = "";
+            login = false;
             ViewData["username"] = user;
         }
     }
