@@ -1,5 +1,10 @@
 # Flight
-A website for a fictional travel agency, with front-end / Api / sql server database to hold users/flights/contact information and a featured login page with full admin support
+## A website for a fictional travel agency
+it has a front-end and a restful-api with a sql server database to hold users/flights/contact information and a featured login page with full admin support
+
+the api has JWT bearer token authentication and policy authorization based on roles for clients/admins with each role having access to their respective endpoints.
+
+
 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/25421570/235348519-4c26fed7-c41d-43b9-8875-b870dbdb219b.png">
