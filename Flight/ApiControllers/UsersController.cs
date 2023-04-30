@@ -1,5 +1,6 @@
 ﻿using Flight.Data;
 using Flight.DataAccess;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -22,7 +23,7 @@ namespace Flight.ApiControllers
         }
         // GET: api/<UsersController>
         [HttpGet]
-        // [Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         public async Task<List<User>> Get()
         {
             return await _db.GetUsers();
@@ -30,7 +31,7 @@ namespace Flight.ApiControllers
 
         // GET api/<UsersController>/5
         [HttpGet("{emailOrUsername}")]
-        // [Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         public async Task<User?> Get(string emailOrUsername)
         {
             return await _db.GetUser(emailOrUsername);
@@ -38,7 +39,7 @@ namespace Flight.ApiControllers
 
         // POST api/<UsersController>
         [HttpPost]
-        // [Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Post([FromBody] CreateUserDto user)
         {
             if (user != null)
@@ -52,7 +53,7 @@ namespace Flight.ApiControllers
 
         // PUT api/<UsersController>/5
         [HttpPut]
-        // [Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Put([FromBody] UpdateUserDto user)
         {
             if (user != null)
@@ -77,8 +78,8 @@ namespace Flight.ApiControllers
 
         // DELETE api/<UsersController>/5
         [HttpDelete("{id}")]
-        // [Authorize(Policy = "Admin")]
-        public async Task<IActionResult> DeleteUser([FromQuery]int id)
+        [Authorize(Policy = "Admin")]
+        public async Task<IActionResult> DeleteUser([FromQuery] int id)
         {
             try
             {

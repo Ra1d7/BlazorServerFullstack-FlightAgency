@@ -1,5 +1,6 @@
 ﻿using Flight.Data;
 using Flight.DataAccess;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Flight.ApiControllers
@@ -20,7 +21,7 @@ namespace Flight.ApiControllers
         }
         // GET: api/<FlightsController>
         [HttpGet]
-        // [Authorize(Policy = "Admin")]
+        [AllowAnonymous]
         public async Task<List<FlightM>> Get()
         {
             return await _db.GetFlights();
@@ -28,7 +29,7 @@ namespace Flight.ApiControllers
 
         // GET api/<FlightsController>/5
         [HttpGet("{id}")]
-        // [Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         public async Task<FlightM?> Get(int id)
         {
             return await _db.GetFlight(id);
@@ -36,21 +37,21 @@ namespace Flight.ApiControllers
 
         // POST api/<FlightsController>
         [HttpPost]
-        // [Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Post([FromBody] CreateFlightDto flight)
         {
             if (flight != null)
             {
                 FlightM toBeCreated = new FlightM(flight.from, flight.to, flight.seats, flight.time, flight.cost);
                 await _db.AddFLight(toBeCreated);
-                return Ok(flight);
+                return Ok(toBeCreated);
             }
             return BadRequest();
         }
 
         // PUT api/<FlightsController>/5
         [HttpPut]
-        // [Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Put([FromBody] UpdateFlightDto flight)
         {
             if (flight != null)
@@ -74,9 +75,9 @@ namespace Flight.ApiControllers
         }
 
         // DELETE api/<FlightsController>/5
-        [HttpDelete("{id}")]
-        // [Authorize(Policy = "Admin")]
-        public async Task<IActionResult> DeleteFlight([FromQuery]int id)
+        [HttpDelete]
+        [Authorize(Policy = "Admin")]
+        public async Task<IActionResult> DeleteFlight([FromQuery] int id)
         {
             try
             {

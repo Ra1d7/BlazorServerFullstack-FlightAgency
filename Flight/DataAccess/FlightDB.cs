@@ -300,5 +300,18 @@ namespace Flight.DataAccess
             reader.Close();
             return booking;
         }
+        public async Task<bool> DeleteBooking(int userid, int flightid)
+        {
+            try
+            {
+                using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
+                SqlCommand cmd = new SqlCommand("DELETE FROM BookedFlights WHERE userId = @userid AND flightId = @flightid", conn);
+                cmd.Parameters.AddWithValue("@userid", userid);
+                cmd.Parameters.AddWithValue("@flightid", flightid);
+                await conn.OpenAsync();
+                return await cmd.ExecuteNonQueryAsync() == 0 ? false : true;
+            }
+            catch { return false; }
+        }
     }
 }

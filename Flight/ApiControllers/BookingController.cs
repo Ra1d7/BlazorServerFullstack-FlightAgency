@@ -1,4 +1,5 @@
 ﻿using Flight.DataAccess;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Flight.ApiControllers
@@ -23,11 +24,13 @@ namespace Flight.ApiControllers
             return await _db.GetBookings();
         }
         [HttpGet("{userid}")]
+        [Authorize(Policy = "Admin")]
         public async Task<BookingDetails?> GetBooking(int userid)
         {
             return await _db.GetBooking(userid);
         }
         [HttpPost]
+        [Authorize(Policy = "Client")]
         public async Task<IActionResult> BookFlight([FromBody] BookingDetails bookingDetails)
         {
             try

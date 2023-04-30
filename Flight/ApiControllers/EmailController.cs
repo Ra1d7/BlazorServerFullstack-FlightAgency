@@ -1,4 +1,5 @@
 ﻿using Flight.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Flight.Helpers.EmailSender;
 
@@ -6,6 +7,7 @@ namespace Flight.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class EmailController : ControllerBase
     {
         private readonly IEmailSender _emailSender;
