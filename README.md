@@ -1,5 +1,5 @@
 # Flight
-## A website for a fictional travel agency
+## A website for a fictional travel agency with full CRUD operations
 it has a front-end and a restful-api with a sql server database to hold users/flights/contact information and a featured login page with full admin support
 
 the api has JWT bearer token authentication and policy authorization based on roles for clients/admins with each role having access to their respective endpoints.
