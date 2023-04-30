@@ -8,6 +8,12 @@ Flight is a Blazor Server website project for a fictional travel agency.
 
 ## Screenshots
 
+<p align="center">
+
+<img src="https://user-images.githubusercontent.com/25421570/235348519-4c26fed7-c41d-43b9-8875-b870dbdb219b.png">
+
+</p>
+
 ![flights](https://user-images.githubusercontent.com/25421570/235348532-82af4de4-1c74-4955-9d3e-db83d1887b1d.png)
 
 ![users](https://user-images.githubusercontent.com/25421570/235348536-644f3b02-b6b4-4d6a-bd14-1454dadb4628.png)
