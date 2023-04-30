@@ -1,3 +1,4 @@
+using Flight.Data;
 using Flight.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,9 +10,11 @@ namespace Flight.Pages
     [IgnoreAntiforgeryToken]
     public class loginModel : PageModel
     {
-        public string username = "not logged in";
+        public bool login_status { get; set; }
+        public Roles Role { get; set; } = Roles.None;
+        public string loggedin_username { get; set; }
         private readonly FlightDB _db;
-
+        public record LoginData(bool login_status,string loggedin_username, Roles Role = Roles.None);
         public loginModel(FlightDB db)
         {
             _db = db;
@@ -30,7 +33,10 @@ namespace Flight.Pages
             {
                 ViewData["color"] = "text-success";
                 ViewData["status"] = $"Welcome, {username}!";
-                return RedirectToPage("/index", "Login", new { user = username });
+                login_status = true;
+                loggedin_username = username;
+                Role = await _db.GetRole(username);
+                return RedirectToPage("/index");
             }
             else
             {
@@ -38,6 +44,10 @@ namespace Flight.Pages
                 ViewData["status"] = $"Wrong username or password";
                 return Page();
             }
+        }
+        public async Task<LoginData> OnGetLoginData()
+        {
+            return new LoginData(login_status, loggedin_username, Role);
         }
     }
 }

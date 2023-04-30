@@ -374,5 +374,26 @@ namespace Flight.DataAccess
             reader.Close();
             return user;
         }
+        public async Task<Roles> GetRole(string username)
+        {
+            Roles role = Roles.None;
+            using SqlConnection conn = new SqlConnection(_config.GetConnectionString("Default"));
+            SqlCommand cmd = new SqlCommand(
+
+                "SELECT [roleid] FROM [Users] WHERE [username] = @username"
+
+                , conn);
+            cmd.Parameters.AddWithValue("@username", username);
+            await conn.OpenAsync();
+            SqlDataReader reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                role = reader.GetInt32(0) == 1 ? Roles.Client : Roles.Admin;
+            }
+
+            reader.Close();
+            return role;
+        }
     }
 }
