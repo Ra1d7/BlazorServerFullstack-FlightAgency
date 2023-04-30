@@ -5,6 +5,7 @@ namespace Flight.Pages
 {
     public class IndexModel : PageModel
     {
+        public bool login { get; set; } = true;
         private LoginData _loginData { get; set; } = null;
         public void OnGet()
         {

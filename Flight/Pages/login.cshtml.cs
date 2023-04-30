@@ -45,9 +45,5 @@ namespace Flight.Pages
                 return Page();
             }
         }
-        public async Task<LoginData> OnGetLoginData()
-        {
-            return new LoginData(login_status, loggedin_username, Role);
-        }
     }
 }
