@@ -19,7 +19,6 @@ namespace Flight.Pages
         }
         public async Task OnGet()
         {
-            await Console.Out.WriteLineAsync("test");
         }
         public async Task OnPost()
         {
